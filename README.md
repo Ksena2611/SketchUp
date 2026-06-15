@@ -1,96 +1,40 @@
-Код	Коментар
-let currentInput = '0';	Змінна, яка зберігає поточне число на екрані (те, що бачить користувач)
-let previousInput = '';	Змінна для верхнього рядка — зберігає перше число та оператор (наприклад "15 +")
-let operator = null;	Змінна для збереження обраного оператора (+, -, *, /, %)
-let shouldResetScreen = false;	Прапорець, який вказує, чи потрібно очистити екран перед введенням нового числа
-const currentDisplay = document.getElementById('current');	Отримуємо доступ до нижнього (основного) рядка дисплея
-const previousDisplay = document.getElementById('previous');	Отримуємо доступ до верхнього рядка дисплея
-function updateDisplay() {	Функція, яка оновлює інформацію на екрані
-currentDisplay.textContent = currentInput;	Виводимо поточне число на нижній рядок
-previousDisplay.textContent = previousInput;	Виводимо приклад на верхній рядок
-}	Закінчення функції
-	updateDisplay
-function appendNumber(number) {	Функція для додавання цифри (0-9)
-if (shouldResetScreen) {	Якщо після оператора — очищуємо екран
-currentInput = '';	Очищаємо поточне значення
-shouldResetScreen = false;	Вимикаємо прапорець
-}	
-if (currentInput === '0' && number !== '0') {	Якщо зараз "0" — замінюємо його новою цифрою
-currentInput = number;	Заміна нуля
-} else {	В іншому випадку
-currentInput += number;	Просто додаємо цифру в кінець
-}	
-updateDisplay();	Оновлюємо екран
-}	Закінчення функції
-	appendNumber
-function appendDecimal() {	Функція для додавання десяткової крапки
-if (shouldResetScreen) {	Якщо потрібно — скидаємо екран
-currentInput = '0';	
-shouldResetScreen = false;	
-}	
-if (!currentInput.includes('.')) {	Якщо крапки ще немає
-currentInput += '.';	Додаємо крапку
-}	
-updateDisplay();	Оновлюємо екран
-}	Закінчення функції
-function appendOperator(op) {	Функція обробки операторів (+, -, ×, ÷)
-if (operator !== null && !shouldResetScreen) {	Якщо вже є оператор — спочатку рахуємо
-calculate();	Виконуємо попередній розрахунок
-}	
-previousInput =	Записуємо перше число + оператор у верхній рядок
-${currentInput} ${op}	
-;	
-operator = op;	Зберігаємо обраний оператор
-shouldResetScreen = true;	Вмикаємо скидання екрану для нового числа
-updateDisplay();	Оновлюємо екран
-}	
-function calculate() {	Головна функція — виконує розрахунок
-` if (operator === null	
-let computation;	Змінна для результату обчислення
-const prev = parseFloat(previousInput);	Перетворюємо верхнє значення у число
-const current = parseFloat(currentInput);	Перетворюємо поточне значення у число
-switch (operator) {	Перевіряємо який оператор вибрано
-case '+':	Додавання
-computation = prev + current;	
-break;	
-case '-': computation = prev - current; break;	Віднімання
-case '*': computation = prev * current; break;	Множення
-case '/':	Ділення
-computation = current === 0 ? 'Помилка' : prev / current;	Захист від ділення на нуль
-break;	
-case '%': computation = prev % current; break;	Відсоток (залишок)
-default: return;	Якщо оператор невідомий
-}	
-currentInput = computation.toString();	Результат стає поточним числом
-previousInput = '';	Очищуємо верхній рядок
-operator = null;	Скидаємо оператор
-shouldResetScreen = true;	Готуємося до нового введення
-updateDisplay();	Показуємо результат
-}	Закінчення функції
-	calculate
-function clearAll() {	Функція повного очищення (AC)
-currentInput = '0';	Повертаємо 0
-previousInput = '';	Очищаємо верхній рядок
-operator = null;	Скидаємо оператор
-updateDisplay();	Оновлюємо екран
-}	
-function deleteLast() {	Функція видалення останньої цифри (⌫)
-if (shouldResetScreen) return;	Якщо екран треба скинути — не видаляємо
-currentInput = currentInput.slice(0, -1);	Видаляємо останній символ
-` if (currentInput === ''	
-currentInput = '0';	Ставимо 0
-}	
-updateDisplay();	Оновлюємо екран
-}	
-document.addEventListener('keydown', (e) => {	Додаємо підтримку клавіатури
-if (e.key >= '0' && e.key <= '9') appendNumber(e.key);	Обробка цифр
-if (e.key === '.') appendDecimal();	Обробка крапки
-` if (e.key === '+'	
-if (e.key === '*') appendOperator('*');	Множення
-if (e.key === '/') appendOperator('/');	Ділення
-` if (e.key === 'Enter'	
-if (e.key === 'Backspace') deleteLast();	Backspace = видалення
-if (e.key === 'Escape') clearAll();	Escape = повне очищення
-});	Закінчення обробки клавіатури
-updateDisplay();	Запускаємо показ "0" при завантаженні сторінки
-	
+
+Interaktivní webové portfolio navržené pro prezentaci architektonických 3D modelů, technických schémat a jejich reálných výstupů či vizualizací pomocí AI. Aplikace funguje jako digitální „kniha projektů“, která uživateli umožňuje plynule procházet jednotlivé fáze návrhu domu od konceptu až po finální realizaci.
+
+---
+
+## ✨ Hlavní Funkce
+
+- **📖 Efekt Knihy (Book View):** Plynulý přechod z úvodní obrazovky (`introScreen`) do interaktivního prohlížeče projektů.
+- **🔄 Srovnání "Před & Po" (Before / After):** Každý projekt přehledně zobrazuje technický návrh ze SketchUpu a jeho odpovídající vizualizaci (vygenerovanou pomocí **Gemini AI**) nebo reálnou fotografii hotové stavby.
+- **🔍 Fullscreen Náhled (Modal):** Možnost kliknout na jakýkoliv obrázek a zobrazit si ho v plném rozlišení v responzivním modálním okně.
+- **⌨️ Ovládání Klávesnicí:**
+  - `Šipka vlevo` / `Šipka vpravo` pro rychlé přepínání mezi projekty.
+  - `Escape` pro návrat na úvodní obrazovku nebo zavření zvětšeného obrázku.
+- **🛡️ Fallback Obrázků:** Ošetření chyb při načítání (pokud obrázek chybí, automaticky se zobrazí přehledný zástupný placeholder).
+
+---
+
+## 📂 Struktura Dat Projektů
+
+Aplikace dynamicky pracuje s 10 klíčovými projekty rozdělenými do 3 tematických fází:
+
+1. **Stavební plány (1. a 2. patro):** Základní 3D modely podlaží vytvořené v programu **SketchUp** transformované pomocí **Gemini** do realistických vizualizací.
+2. **Technické rozvody (Elektrika & Kanalizace):** Schémata a rozvržení inženýrských sítí vytvořená v kombinaci programů SketchUp a Paint.
+3. **Exteriér & Realizace:** Architektonické návrhy fasády a stěn domu (přední, zadní, levá, pravá strana) přímo srovnané s **reálnými fotografiemi realizované stavby**.
+
+---
+
+## 🛠️ Použité Technologie
+
+- **HTML5** – Sémantická struktura a modální prvky.
+- **CSS3** – Pokročilé animace (transition efekty pro otvírání knihy), stylování a responzivní layout.
+- **JavaScript (Vanilla)** – Kompletní logika pro správu stavu (`currentIndex`), dynamické vykreslování dat a zachytávání uživatelských událostí (Event Listeners).
+
+---
+
+## 🚀 Jak Projekt Spustit
+
+1. Naklonujte si tento repozitář:
+   ```bash
+   git clone [https://github.com/vase-jmeno/sketchup-vizualizace.git](https://github.com/vas
