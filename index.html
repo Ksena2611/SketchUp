@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SketchUp | Moje praxe</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=EB+Garamond&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <!-- TITULNÍ STRÁNKA -->
+  <div id="introScreen" class="intro-screen">
+    <div class="intro-content">
+      <div class="book-ornament">✦</div>
+      <h1 class="main-title">SketchUp</h1>
+      <p class="subtitle">Moje praxe</p>
+      <button id="openBtn" class="open-button">
+        Můj projekt
+      </button>
+      <div class="book-ornament bottom">✦</div>
+    </div>
+  </div>
+
+  <!-- KNIHA -->
+  <div class="book" id="book">
+    <!-- LEVÁ STRANA -->
+    <div class="page left">
+      <h2 class="side-title">BYLO</h2>
+      <div class="image-container">
+        <img id="beforeImg" src="" alt="Původní stav">
+      </div>
+      <p id="beforeDesc" class="image-desc"></p>
+      
+      <div class="nav-left">
+        <button id="backToIntro">← Zpět na úvod</button>
+      </div>
+    </div>
+
+    <!-- PRAVÁ STRANA -->
+    <div class="page right">
+      <h2 class="side-title">STALO</h2>
+      <div class="image-container">
+        <img id="afterImg" src="" alt="Nový stav">
+      </div>
+      <p id="afterDesc" class="image-desc"></p>
+
+      <div class="nav-right">
+        <button id="prevProject">◀ Předchozí</button>
+        <button id="nextProject">Další ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODÁLNÍ OKNO PRO ZVĚTŠENÍ -->
+  <div id="imageModal" class="modal">
+    <span class="modal-close">&times;</span>
+    <img id="modalImage" class="modal-content" alt="Zvětšený obrázek">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
